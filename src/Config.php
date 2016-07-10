@@ -3,6 +3,7 @@
 namespace Dhii\Configuration\PHPCSFixer;
 
 use Symfony\CS\Config\Config as PHPCSFixerConfig;
+use Symfony\CS\FixerInterface;
 
 /**
  * A standard, default PHP CS Fixer configuration for Dhii projects.
@@ -25,23 +26,25 @@ class Config extends PHPCSFixerConfig
         parent::__construct($name, $description);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * This overriding implementation sets fixers.
-     *
-     * @return Config A new, set-up instance of the configuration class.
-     *
-     * @since [*next-version*]
-     */
-    public static function create()
-    {
-        $config = parent::create();
-        $config->level(\Symfony\CS\FixerInterface::SYMFONY_LEVEL);
-        $config->fixers(static::getApplicableRules());
+     /**   
+      * {@inheritdoc}
+      *
+      * This overriding implementation sets fixers.
+      *
+      * @return Config A new, set-up instance of the configuration class.
+      *
+      * @since [*next-version*]
+      */
+     public static function create()
+     {
+         $config = parent::create();
+         $config->level(FixerInterface::SYMFONY_LEVEL);
+         $rules = static::getApplicableRules();
 
-        return $config;
-    }
+         $config->fixers($rules);
+
+         return $config;
+     }
 
     /**
      * Return all the rules that should be part of the config.
@@ -52,7 +55,33 @@ class Config extends PHPCSFixerConfig
      */
     public static function getApplicableRules()
     {
-        return array_flip(array_merge(array_flip(static::getSymfonyRules()), array_flip(static::getContribRules())));
+        $rules = [
+            FixerInterface::PSR2_LEVEL    => static::getPsr2Rules(),
+            FixerInterface::SYMFONY_LEVEL => static::getSymfonyRules(),
+            FixerInterface::CONTRIB_LEVEL => static::getContribRules(),
+        ];
+
+        return static::_prepareRules($rules);
+    }
+
+    /**
+     * Combines a map of rule levels to rule lists into one list.
+     *
+     * @since [*next-version*]
+     *
+     * @param array $rules Map of rule level to rule list, where rule list is a numeric array of string names.
+     *
+     * @return array A unique list of all rules combined in a numeric array of strings.
+     */
+    protected static function _prepareRules($rules)
+    {
+        foreach ($rules as $_name => $_rules) {
+            $rules[$_name] = array_flip($_rules);
+        }
+
+        $rules = call_user_func_array('array_merge', $rules);
+
+        return array_keys($rules);
     }
 
     /**
@@ -62,11 +91,34 @@ class Config extends PHPCSFixerConfig
      *
      * @since [*next-version*]
      */
-    public static function getPsr2Rules()
+    public static function getPsr2Rules20()
     {
         return [
             '@PSR2' => true,
         ];
+    }
+
+    public static function getPsr2Rules()
+    {
+        return array_keys(array_filter([
+            'braces'                    => true,
+            'elseif'                    => true,
+            'eof_ending'                => true,
+            'function_call_space'       => true,
+            'function_declaration'      => true,
+            'indentation'               => true,
+            'line_after_namespace'      => true,
+            'linefeed'                  => true,
+            'lowercase_constants'       => false,
+            'lowercase_keywords'        => true,
+            'method_argument_space'     => true,
+            'multiple_use'              => true,
+            'parenthesis'               => true,
+            'php_closing_tag'           => true,
+            'single_line_after_imports' => true,
+            'trailing_spaces'           => true, // Does not work on comments
+            'visibility'                => true,
+        ]));
     }
 
     /**
