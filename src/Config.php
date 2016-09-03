@@ -85,6 +85,8 @@ class Config extends PHPCSFixerConfig
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @todo Use this when using CS Fixer >= 2.0
      *
      * @return array Rules of the PSR-2 level that are applicable to this config.
