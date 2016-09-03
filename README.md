@@ -1,6 +1,4 @@
-## PHP CS Fixer Config  ##
-[![Build Status](https://travis-ci.org/Dhii/php-cs-fixer-config.svg?branch=master)](https://travis-ci.org/Dhii/php-cs-fixer-config)
-[![Test Coverage](https://codeclimate.com/github/Dhii/php-cs-fixer-config/badges/coverage.svg)](https://codeclimate.com/github/Dhii/php-cs-fixer-config/coverage)
-[![Code Climate](https://codeclimate.com/github/Dhii/php-cs-fixer-config/badges/gpa.svg)](https://codeclimate.com/github/Dhii/php-cs-fixer-config)
+## PHP CS Fixer Config - PHP 5.3 ##
+[![Build Status](https://travis-ci.org/Dhii/php-cs-fixer-config.svg?branch=php-5.3)](https://travis-ci.org/Dhii/php-cs-fixer-config)
 
-Common configuration for PHP CS Fixer
+Common configuration for PHP CS Fixer, for use with PHP 5.3.
