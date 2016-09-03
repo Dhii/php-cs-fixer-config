@@ -14,9 +14,17 @@
         "friendsofphp/php-cs-fixer": ">=1.11 <1.12",
         "php": ">=5.4"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    },
     "autoload": {
         "psr-4": {
             "Dhii\\Configuration\\PHPCSFixer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dhii\\Configuration\\PHPCSFixer\\UnitTest\\": "test/unit"
         }
     }
 }
