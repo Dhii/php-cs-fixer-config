@@ -26,7 +26,7 @@ class Config extends PHPCSFixerConfig
         parent::__construct($name, $description);
     }
 
-     /**   
+     /**
       * {@inheritdoc}
       *
       * This overriding implementation sets fixers.
@@ -55,11 +55,11 @@ class Config extends PHPCSFixerConfig
      */
     public static function getApplicableRules()
     {
-        $rules = [
+        $rules = array(
             FixerInterface::PSR2_LEVEL    => static::getPsr2Rules(),
             FixerInterface::SYMFONY_LEVEL => static::getSymfonyRules(),
             FixerInterface::CONTRIB_LEVEL => static::getContribRules(),
-        ];
+        );
 
         return static::_prepareRules($rules);
     }
@@ -85,6 +85,7 @@ class Config extends PHPCSFixerConfig
     }
 
     /**
+     * @codeCoverageIgnore
      * @todo Use this when using CS Fixer >= 2.0
      *
      * @return array Rules of the PSR-2 level that are applicable to this config.
@@ -93,14 +94,14 @@ class Config extends PHPCSFixerConfig
      */
     public static function getPsr2Rules20()
     {
-        return [
+        return array(
             '@PSR2' => true,
-        ];
+        );
     }
 
     public static function getPsr2Rules()
     {
-        return array_keys(array_filter([
+        return array_keys(array_filter(array(
             'braces'                    => true,
             'elseif'                    => true,
             'eof_ending'                => true,
@@ -118,7 +119,7 @@ class Config extends PHPCSFixerConfig
             'single_line_after_imports' => true,
             'trailing_spaces'           => true, // Does not work on comments
             'visibility'                => true,
-        ]));
+        )));
     }
 
     /**
@@ -144,7 +145,7 @@ class Config extends PHPCSFixerConfig
      */
     public static function getSymfonyRules20()
     {
-        return [
+        return array(
             'blank_line_after_opening_tag'                => true,
             'blank_line_before_return'                    => true,
             'cast_spaces'                                 => true,
@@ -207,7 +208,7 @@ class Config extends PHPCSFixerConfig
             'unalign_equals'                              => true,
             'unary_operator_spaces'                       => true,
             'whitespace_after_comma_in_array'             => true,
-        ];
+        );
     }
 
     /**
@@ -231,7 +232,7 @@ class Config extends PHPCSFixerConfig
      */
     public static function getContribRules20()
     {
-        return [
+        return array(
             'align_double_arrow'                        => true,
             'align_equals'                              => true,
             'combine_consecutive_unsets'                => false,
@@ -241,7 +242,7 @@ class Config extends PHPCSFixerConfig
             'dir_constant'                              => false,
             'header_comment'                            => false,
             'linebreak_after_opening_tag'               => true,
-            'long_array_syntax'                         => false,
+            'long_array_syntax'                         => true,
             'modernize_types_casting'                   => false,
             'no_blank_lines_before_namespace'           => false,
             'no_empty_comment'                          => true,
@@ -262,9 +263,9 @@ class Config extends PHPCSFixerConfig
             'php_unit_strict'                           => false,
             'psr0'                                      => false,
             'random_api_migration'                      => false,
-            'short_array_syntax'                        => true,
+            'short_array_syntax'                        => false,
             'strict_comparison'                         => false,
             'strict_param'                              => false,
-        ];
+        );
     }
 }
